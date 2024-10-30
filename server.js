@@ -20,7 +20,6 @@ server.listen(3000, (req, res) => {
   console.log("Server running in http://localhost:3000");
 });
 
-// Inicio de las rutas
-server.get("/", (req, res) => {
-  res.render("index.ejs");
-});
+// Ruta principal
+const indexRoute = require("./routes/index");
+server.use("/", indexRoute);
