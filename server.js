@@ -20,6 +20,8 @@ server.listen(3000, (req, res) => {
   console.log("Server running in http://localhost:3000");
 });
 
+// INICIO DE RUTAS
+
 // Ruta principal
 const indexRoute = require("./routes/index");
 server.use("/", indexRoute);
@@ -27,3 +29,13 @@ server.use("/", indexRoute);
 // Ruta de bienvenida
 const welcomeRoute = require("./routes/welcome.js");
 server.use("/", welcomeRoute);
+
+// Ruta de login
+const loginRoute = require("./routes/login");
+server.use("/", loginRoute);
+
+// Ruta de registro
+const registerRoute = require("./routes/register");
+server.use("/", registerRoute);
+
+// FIN DE RUTAS
