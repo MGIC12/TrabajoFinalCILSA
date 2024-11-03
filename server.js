@@ -23,3 +23,5 @@ server.listen(3000, (req, res) => {
 // Ruta principal
 const indexRoute = require("./routes/index");
 server.use("/", indexRoute);
+const welcomeRoute = require("./routes/welcome.js");
+server.use("/", welcomeRoute);
