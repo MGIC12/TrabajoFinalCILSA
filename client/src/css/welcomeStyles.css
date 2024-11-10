@@ -1,0 +1,98 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900");
+
+:root {
+  --lavender-floral: #cc92ffff;
+  --indigo-dye: #224870ff;
+  --jordy-blue: #96c5f7ff;
+  --platinum: #ddddddff;
+  --white: #ffffffff;
+}
+.header {
+  background-color: var(--indigo-dye);
+  .logo-inicio {
+    color: var(--platinum);
+    &:hover {
+      color: var(--jordy-blue);
+    }
+  }
+  .nav-link {
+    color: var(--platinum);
+    &:hover {
+      color: var(--jordy-blue);
+    }
+  }
+  .boton-nav {
+    background-color: var(--jordy-blue);
+  }
+}
+.main {
+  margin: auto;
+  background-color: var(--jordy-blue);
+  height: 94.5vh;
+  font-family: "Montserrat", sans-serif;
+}
+
+.imagen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 50px;
+  background-image: url("../../public/img/tuto2.png");
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  transition: 0.5s;
+}
+.cartel {
+  background-color: #ffffffaa;
+  color: var(--indigo-dye);
+  box-shadow: var(--indigo-dye) 0 0 15px;
+  border-radius: 20px;
+  padding: 20px 60px;
+}
+.bienvenido {
+  font-size: 5rem;
+  transition: 1s;
+}
+.info-item {
+  font-size: 3rem;
+  transition: 1s;
+}
+.info-item-link {
+  font-size: 2rem;
+  transition: 1s;
+}
+.link-inicio {
+  text-decoration: none;
+  color: var(--indigo-dye);
+  border-bottom: 1px solid var(--indigo-dye);
+
+  &:hover {
+    border-bottom: 1px solid var(--lavender-floral);
+    color: var(--lavender-floral);
+  }
+}
+
+@media screen and (max-width: 1005px) {
+  .imagen {
+    transition: 0.5s;
+  }
+  .cartel {
+    padding: 20px 20px;
+    transition: 1s;
+
+    .bienvenido {
+      font-size: 3rem;
+      transition: 1s;
+    }
+    .info-item {
+      font-size: 1.5rem;
+      transition: 1s;
+    }
+    .info-item-link {
+      font-size: 1.5rem;
+      transition: 1s;
+    }
+  }
+}
