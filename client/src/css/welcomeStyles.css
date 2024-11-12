@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900");
 
 :root {
   --lavender-floral: #cc92ffff;
@@ -38,11 +38,11 @@
   justify-content: center;
   align-items: center;
   row-gap: 50px;
-  background-image: url('../../public/img/tuto1.png');
+  background-image: url("../../img/tuto1.png");
   background-size: cover;
   background-position: bottom;
   height: 100%;
-  transition: .5s;
+  transition: 0.5s;
 }
 .cartel {
   background-color: #ffffffaa;
@@ -52,7 +52,7 @@
   padding: 20px 60px;
 }
 .bienvenido {
-  font-size: 5rem;  
+  font-size: 5rem;
   transition: 1s;
 }
 .info-item {
@@ -76,7 +76,7 @@
 
 @media screen and (max-width: 1005px) {
   .imagen {
-    transition: .5s;
+    transition: 0.5s;
   }
   .cartel {
     padding: 20px 20px;
@@ -85,17 +85,14 @@
     .bienvenido {
       font-size: 3rem;
       transition: 1s;
-
     }
     .info-item {
       font-size: 1.5rem;
       transition: 1s;
-
     }
     .info-item-link {
       font-size: 1.5rem;
       transition: 1s;
-
     }
   }
 }
