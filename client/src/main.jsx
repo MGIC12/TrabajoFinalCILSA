@@ -3,7 +3,9 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
-import Welcome from "./pages/welcomePage.jsx";
+{
+  /* import Welcome from "./pages/welcomePage.jsx";*/
+}
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
