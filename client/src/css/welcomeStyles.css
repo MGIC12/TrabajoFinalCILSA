@@ -17,8 +17,10 @@
   }
   .nav-link {
     color: var(--platinum);
+    border-radius: 10px;
     &:hover {
       color: var(--jordy-blue);
+      background-color: #305781;
     }
   }
   .boton-nav {
@@ -26,7 +28,7 @@
   }
 }
 .main {
-  margin: auto;
+  margin: 0;
   background-color: var(--jordy-blue);
   height: 94.5vh;
   font-family: "Montserrat", sans-serif;
@@ -64,12 +66,11 @@
   transition: 1s;
 }
 .link-inicio {
-  text-decoration: none;
+  /* text-decoration: none; */
   color: var(--indigo-dye);
-  border-bottom: 1px solid var(--indigo-dye);
+  /* border-bottom: 1px solid var(--indigo-dye); */
 
   &:hover {
-    border-bottom: 1px solid var(--lavender-floral);
     color: var(--lavender-floral);
   }
 }

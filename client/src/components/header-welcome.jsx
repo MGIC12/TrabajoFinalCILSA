@@ -1,4 +1,4 @@
-import "../css/welcomeStyles.css";
+import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
@@ -31,14 +31,14 @@ function HeaderWelcome() {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <Link className="nav-link" to="/login">
                 Iniciar Sesión
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <Link className="nav-link" to="/register">
                 Registrarse
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
