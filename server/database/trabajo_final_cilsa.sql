@@ -1,4 +1,7 @@
 /* TABLA USERS */
+CREATE DATABASE trabajo_final_cilsa;
+USE trabajo_final_cilsa;
+
 CREATE TABLE users (
     idUsuario int(50) NOT NULL AUTO_INCREMENT,
     usuario varchar(50) NOT NULL,
@@ -6,7 +9,7 @@ CREATE TABLE users (
     email varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
     PRIMARY KEY (idUsuario)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /* TABLA TAREAS */
 CREATE TABLE tareas (
@@ -18,4 +21,7 @@ CREATE TABLE tareas (
     PRIMARY KEY (idTarea),
     KEY idUsuario (idUsuario),
     CONSTRAINT tareas_ibfk_1 FOREIGN KEY (idUsuario) REFERENCES users (idUsuario)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
+flush privileges;
