@@ -6,7 +6,7 @@ CREATE TABLE users (
     idUsuario int(50) NOT NULL AUTO_INCREMENT,
     usuario varchar(50) NOT NULL,
     nombre varchar(100) NOT NULL,
-    email varchar(255) NOT NULL,
+    email varchar(255) UNIQUE NOT NULL,
     password varchar(255) NOT NULL,
     PRIMARY KEY (idUsuario)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
@@ -25,3 +25,18 @@ CREATE TABLE tareas (
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
 flush privileges;
+
+-- Insert two users into the users table
+INSERT INTO users (usuario, nombre, email, password) VALUES ('juan1','Juan','user1@ejemplo.com','pass1');
+INSERT INTO users (usuario, nombre, email, password) VALUES ('maria2','Maria','user1@ejemplo.com','pass2');
+
+-- Insert ToDos into the tareas table, associated with the dirst user
+INSERT INTO tareas (idUsuario,fechaCreacion,estado,descripcion,)
+VALUES
+('1','11-13-2024','1','Salir a correr'),
+('1','11-13-2024','0','Seguir con TP'),
+('1','11-13-2024','0','No morir');
+
+SELECT * FROM users;
+SELECT * FROM tareas;
+UPDATE tareas SET fechaCreacion = "2024-11-13" WHERE idUsuario = 1;

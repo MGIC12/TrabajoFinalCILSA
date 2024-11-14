@@ -12,7 +12,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Welcome />} />
-        <Route path="/todo" element={<ToDo />} />
+        <Route path="/todo/:id" element={<ToDo />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
