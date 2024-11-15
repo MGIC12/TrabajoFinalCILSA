@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export const Login = () => {
-  const [ usuario, setUsuario ] = useState('');
+  const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ error, setError ] = useState('');
   const navigate = useNavigate(); // Para redireccionar
@@ -11,7 +11,7 @@ export const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    axios.post('http://localhost:3001/login', { usuario, password })
+    axios.post('http://localhost:3001/login', { email, password })
     .then((response) => {
       const idUsuario = response.data.id;
       navigate(`/todo/${idUsuario}`); // Redirige al usuario a la pagina con sus tareas.
@@ -19,6 +19,8 @@ export const Login = () => {
     .catch((error) => {
       if (error.response && error.response.status === 401) {
         setError('Credenciales incorrectas');
+      } else if (error.response.status === 400){
+        setError('Faltan credenciales');
       } else {
         setError('Error en el servidor');
       }
@@ -29,13 +31,13 @@ export const Login = () => {
     <section className="center">
       <h2>LOGIN</h2>
       <form onSubmit={handleLogin} className="form">
-        <label>NOMBRE DE USUARIO</label>
+        <label>CORREO ELECTRONICO</label>
         <input 
         id="" 
-        placeholder="Nombre de usuario" 
+        placeholder="Correo electronico" 
         type="text" 
-        value={usuario}
-        onChange={(e) => setUsuario(e.target.value)}/>
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}/>
 
         <label>CONTRASEÑA</label>
         <input
@@ -48,6 +50,7 @@ export const Login = () => {
         <button type="submit">Ingresar</button>
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      <p>No tenes cuenta? <Link to='/register'>Registrate</Link></p>
     </section>
   )
 }

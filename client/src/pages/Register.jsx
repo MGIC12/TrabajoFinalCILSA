@@ -3,7 +3,6 @@ import axios from 'axios';
 
 export const Register = () => {
   const [nombre, setNombre] = useState('');
-  const [usuario, setUsuario] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [mensaje, setMensaje] = useState('');
@@ -12,10 +11,9 @@ export const Register = () => {
     e.preventDefault(); // Evita que el formulario se envíe de la forma tradicional
 
     // Realiza la solicitud POST
-    axios.post('http://localhost:3001/crearUser', { usuario, nombre, email, password })
+    axios.post('http://localhost:3001/crearUser', { nombre, email, password })
     .then((response) => {
       setNombre(''); // Limpia el formulario
-      setUsuario('');
       setEmail('');
       setPassword('');
       setMensaje(response.data.message); // Muestra un mensaje de éxito
@@ -27,14 +25,6 @@ export const Register = () => {
     <section className="center">
       <h2>REGISTER</h2>
       <form onSubmit={handleSubmit} className="form">
-        <label>USUARIO</label>
-        <input 
-        id="" 
-        placeholder="elija un nombre de usuario" 
-        type="text" 
-        value={usuario}
-        onChange={(e) => setUsuario(e.target.value)} />
-        <p>ADMITIDO: Mayúsculas, Minúsculas, Números, ., -, #, Sin espacios.</p>
 
         <label>NOMBRE</label>
         <input 
@@ -60,9 +50,10 @@ export const Register = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)} />
 
-        <button type="submit">Enviar</button>
+        <button type="submit">REGISTRARSE</button>
       </form>
       {mensaje && <p>{mensaje}</p>}
+      {mensaje && <Link to='/login'>Iniciá sesión</Link>}
     </section>
   )
 }

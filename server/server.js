@@ -8,11 +8,11 @@ server.use(express.json());
 // Base de datos
 const connection = require("./database/db");
 
-// Ruta para hacer una consulta
+// Ruta para hacer la consulta de las tareas de un usuario
+// Toma los parametros de la URL (idUsuario) y lo utiliza para hacer el query de las tareas de ese usuario
 server.get('/todo/:id', (req, res) => {
   const { id } = req.params;
   const sqlQuery = 'SELECT * FROM tareas WHERE idUsuario = ?'; // Cambia esto según tu consulta
-  // const sqlQuery = 'SELECT * FROM users'; // Cambia esto según tu consulta
 
   connection.query(sqlQuery, [id], (err, results) => {
     if (err) {
@@ -26,11 +26,11 @@ server.get('/todo/:id', (req, res) => {
 
 // Ruta para manejar una solicitud POST de REGISTER
 server.post('/crearUser', (req, res) => {
-  const { usuario, nombre, email, password } = req.body;
+  const { nombre, email, password } = req.body;
 
-  const sqlInsert = 'INSERT INTO users (usuario, nombre, email, password) VALUES (?, ?, ?, ?)';
+  const sqlInsert = 'INSERT INTO users (nombre, email, password) VALUES (?, ?, ?)';
 
-  connection.query(sqlInsert, [usuario, nombre, email, password], (err, result) => {
+  connection.query(sqlInsert, [nombre, email, password], (err, result) => {
     if(err) {
       res.status(500).json({ error: 'Error al insertar los datos' });
     } else {
@@ -39,23 +39,41 @@ server.post('/crearUser', (req, res) => {
   });
 });
 
-// Ruta del POST de LOGIN
+// Ruta de login con mensajes de error detallados
 server.post('/login', (req, res) => {
-  const { usuario, password } = req.body;
+  const { email, password } = req.body;
 
-  const sqlQuery = 'SELECT id FROM users WHERE usuario = ? AND password = ?';
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Faltan credenciales' });
+  }
 
-  connection.query(sqlQuery, [usuario, password], (err, results) => {
+  const sqlQuery = 'SELECT idUsuario FROM users WHERE email = ? AND password = ?';
+
+  connection.query(sqlQuery, [email, password], (err, results) => {
     if(err) {
       res.status(500).json({ error: 'Error en la consulta' });
     } else if (results.length > 0) {
-      res.json({ success: true, id: results[0].id });
+      res.json({ success: true, id: results[0].idUsuario }); //devuelve esto results: [ RowDataPacket { idUsuario: 1 } ]
     } else {
       res.status(401).json({ success: false, message: 'Credenciales incorrectas' });
     }
   });
 });
 
+// Ruta para coltar datos del usuario
+server.get('/user/:id', (req, res) => {
+  const { id } = req.params;
+  const sqlQuery = 'SELECT * FROM users WHERE idUsuario = ?'; // Cambia esto según tu consulta
+
+  connection.query(sqlQuery, [id], (err, results) => {
+    if (err) {
+      res.status(500).json({ error: 'Error en la consulta' });
+      console.error('Error en la consulta:', err);
+    } else {
+      res.json(results);
+    }
+  });
+});
 // Configuración del puerto y ejecución del servidor
 server.listen(3001, () => {
   console.log("Servidor escuchando en el puerto 3001");
