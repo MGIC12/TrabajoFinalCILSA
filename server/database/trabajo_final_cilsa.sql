@@ -5,7 +5,7 @@ USE trabajo_final_cilsa;
 CREATE TABLE users (
     idUsuario int(50) NOT NULL AUTO_INCREMENT,
     nombre varchar(100) NOT NULL,
-    email varchar(255) NOT NULL,
+    email varchar(255) UNIQUE NOT NULL,
     password varchar(255) NOT NULL,
     PRIMARY KEY (idUsuario)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
