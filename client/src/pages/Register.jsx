@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import HeaderWelcome from "../components/header-welcome";
 import axios from "axios";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 export const Register = () => {
   const [nombre, setNombre] = useState("");
@@ -26,38 +28,47 @@ export const Register = () => {
   return (
     <>
       <HeaderWelcome />
-      <section className="center">
-        <h2>REGISTER</h2>
-        <form onSubmit={handleSubmit} className="form">
-          <label>NOMBRE</label>
-          <input
+      <section className="container center mt-3">
+        <h2 className="text-center mb-3 h1 mt-3 fw-bold border-bottom border-3 rounded border-secondary">
+          Registro
+        </h2>
+        <Form onSubmit={handleSubmit} className="form">
+          <Form.Label>Nombre</Form.Label>
+          <Form.Control
             id=""
-            placeholder="su nombre"
+            placeholder="Su nombre"
             type="text"
+            required
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
           />
 
-          <label>EMAIL</label>
-          <input
+          <Form.Label>Email</Form.Label>
+          <Form.Control
             id=""
             placeholder="email"
             type="text"
+            required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <label>CONTRASEÑA</label>
-          <input
+          <Form.Label>Contraseña</Form.Label>
+          <Form.Control
             id=""
             placeholder="contraseña"
             type="password"
+            required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-
-          <button type="submit">REGISTRARSE</button>
-        </form>
+          <Form.Text className="text-center">
+            No vamos a compartir tus datos con nadie.
+          </Form.Text>
+          <Button type="submit" variant="success" className="mt-2">
+            Registrarse
+          </Button>
+        </Form>
         {mensaje && <p>{mensaje}</p>}
         {mensaje && <Link to="/login">Iniciá sesión</Link>}
       </section>

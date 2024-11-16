@@ -35,7 +35,9 @@ export const Login = () => {
     <>
       <HeaderWelcome />
       <section className="container center mt-3">
-        <h2 className="text-center mb-3 h1">Inicio de Sesión</h2>
+        <h2 className="text-center mb-3 h1 mt-3 fw-bold border-bottom border-3 rounded border-secondary">
+          Inicio de Sesión
+        </h2>
         <Form onSubmit={handleLogin} className="form mt-3">
           <Form.Label>Correo electrónico</Form.Label>
           <Form.Control
@@ -57,7 +59,7 @@ export const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <Form.Text className="text-center">
-            No vamos a compartir tus datos con nadie.
+            Asegúrate de no compartir tu contraseña con nadie.
           </Form.Text>
           <Button type="submit" variant="success" className="mb-3">
             Ingresar
