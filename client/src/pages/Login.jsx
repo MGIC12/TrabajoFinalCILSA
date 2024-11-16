@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import HeaderWelcome from "../components/header-welcome";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -32,32 +34,41 @@ export const Login = () => {
   return (
     <>
       <HeaderWelcome />
-      <section className="center">
-        <h2>LOGIN</h2>
-        <form onSubmit={handleLogin} className="form">
-          <label>CORREO ELECTRONICO</label>
-          <input
+      <section className="container center mt-3">
+        <h2 className="text-center mb-3 h1">Inicio de Sesión</h2>
+        <Form onSubmit={handleLogin} className="form mt-3">
+          <Form.Label>Correo electrónico</Form.Label>
+          <Form.Control
             id=""
-            placeholder="Correo electronico"
+            placeholder="Correo electrónico"
             type="text"
+            required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <label>CONTRASEÑA</label>
-          <input
+          <Form.Label>Contraseña</Form.Label>
+          <Form.Control
             id=""
             placeholder="Contraseña"
             type="password"
+            required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-
-          <button type="submit">Ingresar</button>
-        </form>
+          <Form.Text className="text-center">
+            No vamos a compartir tus datos con nadie.
+          </Form.Text>
+          <Button type="submit" variant="success" className="mb-3">
+            Ingresar
+          </Button>
+        </Form>
         {error && <p style={{ color: "red" }}>{error}</p>}
         <p>
-          No tenes cuenta? <Link to="/register">Registrate</Link>
+          No tenés cuenta?{" "}
+          <Link className="text-decoration-none text-danger" to="/register">
+            Registrate
+          </Link>
         </p>
       </section>
     </>
