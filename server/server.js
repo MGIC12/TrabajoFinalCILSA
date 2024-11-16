@@ -28,11 +28,21 @@ server.get('/todo/:id', (req, res) => {
 server.post('/crearUser', (req, res) => {
   const { nombre, email, password } = req.body;
 
+  if (!nombre || !email || !password) {
+    res.status(400).json({ error: 'Todos los campos son obligatorios' });
+  }
+
   const sqlInsert = 'INSERT INTO users (nombre, email, password) VALUES (?, ?, ?)';
 
   connection.query(sqlInsert, [nombre, email, password], (err, result) => {
     if(err) {
-      res.status(500).json({ error: 'Error al insertar los datos' });
+      if (err.code === 'ER_DUP_ENTRY') {
+        // Error de valor duplicado
+        res.status(409).json({ error: 'El correo electrónico ya está registrado' });
+      } else {
+        res.status(500).json({ error: 'Error al insertar los datos' });
+      }
+      console.error('Error en la consulta:', err);
     } else {
       res.json({ message: 'Datos insertados exitosamente', id: result.insertId });
     }

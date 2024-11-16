@@ -65,7 +65,7 @@ export const Login = () => {
             Ingresar
           </Button>
         </Form>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p className="error-text" style={{ color: "red" }}>{error}</p>}
         <p>
           No tenés cuenta?{" "}
           <Link className="text-decoration-none text-danger" to="/register">

@@ -26,7 +26,7 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
 flush privileges;
 
 INSERT INTO users (nombre, email, password) VALUES ('Juan','user1@ejemplo.com','pass1');
-INSERT INTO users (nombre, email, password) VALUES ('Maria','user1@ejemplo.com','pass2');
+INSERT INTO users (nombre, email, password) VALUES ('Maria','user2@ejemplo.com','pass2');
 
 INSERT INTO tareas (idUsuario,fechaCreacion,estado,descripcion)
 VALUES

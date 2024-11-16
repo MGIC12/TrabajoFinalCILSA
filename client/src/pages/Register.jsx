@@ -10,6 +10,7 @@ export const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mensaje, setMensaje] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Evita que el formulario se envíe de la forma tradicional
@@ -22,6 +23,13 @@ export const Register = () => {
         setEmail("");
         setPassword("");
         setMensaje(response.data.message); // Muestra un mensaje de éxito
+      })
+      .catch((error) => {
+        if (error.response) {
+          setError(error.response.data.error); // Mensaje de error desde el servidor
+        } else {
+          setError('Error en el servidor');
+        }
       });
   };
 
@@ -69,7 +77,8 @@ export const Register = () => {
             Registrarse
           </Button>
         </Form>
-        {mensaje && <p>{mensaje}</p>}
+        {mensaje && <p className="success-text">{mensaje}</p>}
+        {error && <p className="error-text" style={{ color: "red" }}>{error}</p>}
         {mensaje && <Link to="/login">Iniciá sesión</Link>}
       </section>
     </>
