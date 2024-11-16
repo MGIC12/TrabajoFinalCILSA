@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import HeaderWelcome from "../components/header-welcome"
-import "../css/welcomeStyles.css"
+import HeaderWelcome from "../components/header-welcome";
+import "../css/welcomeStyles.css";
 
 function Welcome() {
   // Inicializo la libreria de animaciones
@@ -13,7 +13,7 @@ function Welcome() {
 
   return (
     <>
-      <HeaderWelcome></HeaderWelcome>
+      <HeaderWelcome />
       <div className="main p-0">
         <div className="imagen container-fluid text-center">
           <div
@@ -38,7 +38,7 @@ function Welcome() {
             </h3>
             <p className="info-item-link">
               Para comenzar,{" "}
-              <Link to='/login' className="link-inicio">
+              <Link to="/login" className="link-inicio">
                 inicia sesión.
               </Link>
             </p>

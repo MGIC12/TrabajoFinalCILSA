@@ -14,9 +14,9 @@ function HeaderWelcome() {
   return (
     <nav className="navbar navbar-expand-sm header">
       <div className="container-fluid">
-        <a className="navbar-brand logo-inicio" href="">
+        <Link className="navbar-brand logo-inicio" to="/">
           ToDoW3b
-        </a>
+        </Link>
         <button
           className="navbar-toggler boton-nav"
           type="button"

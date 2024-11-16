@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import HeaderWelcome from "../components/header-welcome";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -29,33 +30,36 @@ export const Login = () => {
   };
 
   return (
-    <section className="center">
-      <h2>LOGIN</h2>
-      <form onSubmit={handleLogin} className="form">
-        <label>CORREO ELECTRONICO</label>
-        <input
-          id=""
-          placeholder="Correo electronico"
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+    <>
+      <HeaderWelcome />
+      <section className="center">
+        <h2>LOGIN</h2>
+        <form onSubmit={handleLogin} className="form">
+          <label>CORREO ELECTRONICO</label>
+          <input
+            id=""
+            placeholder="Correo electronico"
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <label>CONTRASEÑA</label>
-        <input
-          id=""
-          placeholder="Contraseña"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <label>CONTRASEÑA</label>
+          <input
+            id=""
+            placeholder="Contraseña"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        <button type="submit">Ingresar</button>
-      </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <p>
-        No tenes cuenta? <Link to="/register">Registrate</Link>
-      </p>
-    </section>
+          <button type="submit">Ingresar</button>
+        </form>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <p>
+          No tenes cuenta? <Link to="/register">Registrate</Link>
+        </p>
+      </section>
+    </>
   );
 };
