@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import HeaderWelcome from "../components/header-welcome";
 import "../css/welcomeStyles.css";
 
 function Welcome() {
@@ -13,7 +12,6 @@ function Welcome() {
 
   return (
     <>
-      <HeaderWelcome />
       <div className="main p-0">
         <div className="imagen container-fluid text-center">
           <div

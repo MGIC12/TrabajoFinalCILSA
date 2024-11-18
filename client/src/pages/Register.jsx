@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import HeaderWelcome from "../components/header-welcome";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -28,14 +27,13 @@ export const Register = () => {
         if (error.response) {
           setError(error.response.data.error); // Mensaje de error desde el servidor
         } else {
-          setError('Error en el servidor');
+          setError("Error en el servidor");
         }
       });
   };
 
   return (
     <>
-      <HeaderWelcome />
       <section className="container center mt-3">
         <h2 className="text-center mb-3 h1 mt-3 fw-bold border-bottom border-3 rounded border-secondary">
           Registro
@@ -78,7 +76,11 @@ export const Register = () => {
           </Button>
         </Form>
         {mensaje && <p className="success-text">{mensaje}</p>}
-        {error && <p className="error-text" style={{ color: "red" }}>{error}</p>}
+        {error && (
+          <p className="error-text" style={{ color: "red" }}>
+            {error}
+          </p>
+        )}
         {mensaje && <Link to="/login">Iniciá sesión</Link>}
       </section>
     </>

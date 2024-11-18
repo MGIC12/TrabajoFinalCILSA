@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import HeaderWelcome from "../components/header-welcome";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
@@ -33,7 +32,6 @@ export const Login = () => {
 
   return (
     <>
-      <HeaderWelcome />
       <section className="container center mt-3">
         <h2 className="text-center mb-3 h1 mt-3 fw-bold border-bottom border-3 rounded border-secondary">
           Inicio de Sesión
@@ -65,7 +63,11 @@ export const Login = () => {
             Ingresar
           </Button>
         </Form>
-        {error && <p className="error-text" style={{ color: "red" }}>{error}</p>}
+        {error && (
+          <p className="error-text" style={{ color: "red" }}>
+            {error}
+          </p>
+        )}
         <p>
           No tenés cuenta?{" "}
           <Link className="text-decoration-none text-danger" to="/register">
