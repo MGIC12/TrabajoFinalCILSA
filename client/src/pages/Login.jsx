@@ -17,7 +17,7 @@ export const Login = () => {
       .post("http://localhost:3001/login", { email, password })
       .then((response) => {
         const idUsuario = response.data.id;
-        navigate(`/todo/${idUsuario}`); // Redirige al usuario a la pagina con sus tareas.
+        navigate(`/todo/${idUsuario}`, { state: { logged: true } }); // Redirige al usuario a la pagina con sus tareas.
       })
       .catch((error) => {
         if (error.response && error.response.status === 401) {
