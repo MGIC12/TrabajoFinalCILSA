@@ -19,22 +19,76 @@ function HeaderWelcome() {
   //     .then((data) => setData(data.message));
   // }, []);
 
+  {
+    /* <div>
+            <span>{state?.name}</span>
+            <button onClick={onLogout}>Logout</button>
+          </div>*/
+  }
+
   return (
     <>
       <header>
-        <h1>
-          <Link to="/">Logo</Link>
-        </h1>
-
         {state?.logged ? (
-          <div>
-            <span>{state?.name}</span>
-            <button onClick={onLogout}>Logout</button>
-          </div>
+          <nav className="navbar navbar-expand-sm header">
+            <div className="container-fluid">
+              <Link className="navbar-brand logo-inicio" to="/">
+                ToDoW3b
+              </Link>
+              <button
+                className="navbar-toggler boton-nav"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span className="navbar-toggler-icon"></span>
+              </button>
+              <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul className="navbar-nav">
+                  <li className="nav-item">
+                    <button className="btn btn-danger" onClick={onLogout}>
+                      Cerrar Sesión
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
         ) : (
-          <nav>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
+          <nav className="navbar navbar-expand-sm header">
+            <div className="container-fluid">
+              <Link className="navbar-brand logo-inicio" to="/">
+                ToDoW3b
+              </Link>
+              <button
+                className="navbar-toggler boton-nav"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span className="navbar-toggler-icon"></span>
+              </button>
+              <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul className="navbar-nav">
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/login">
+                      Iniciar Sesión
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/register">
+                      Registrarse
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </nav>
         )}
       </header>
