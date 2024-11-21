@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { tareas, register, login, user } = require("../models/index"); // Importar la base de datos desde index.js
+const { crear, del, modificar, cambioestado } = require("../models/index");
 
 // Definir las rutas
 
@@ -16,6 +17,16 @@ router.post("/login", login);
 
 // Ruta para consultar datos del USUARIO
 router.get("/user/:id", user);
+
+router.post("/crearTarea", crear);
+
+router.delete("/eliminarTarea/:id", del);
+
+router.put("/editarTarea", modificar);
+
+router.put("/cambiarEstado/:id", cambioestado);
+
+//router.delete('/eliminarTarea', del);
 
 // Nueva ruta para manejar la eliminación de un curso por su id
 // router.delete('/:id', del); // Maneja DELETE en la ruta con un parámetro id
