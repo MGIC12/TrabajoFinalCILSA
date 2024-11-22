@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Tareas } from "../components/tareas";
+import { Tareas } from "../components/Tareas";
 
 function ToDo() {
   const { id } = useParams(); // Captura el id de la URL
@@ -25,8 +25,8 @@ function ToDo() {
 
   return (
     <>
-      <div>
-        <h1>Tareas de {user}</h1>
+      <div className="container center mt-3">
+        <h1 className="text-center mt-3 fw-bold ">Tareas de {user}</h1>
         {/* {JSON.stringify(user)} */}
         <Tareas />
       </div>

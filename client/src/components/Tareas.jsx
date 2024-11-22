@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { Form, InputGroup, Button } from "react-bootstrap";
+import "../css/todoStyles.css";
 
 export const Tareas = () => {
   const { id } = useParams(); // Captura el id de la URL
@@ -123,31 +125,35 @@ export const Tareas = () => {
 
   return (
     <>
-      <div className="container">
-        <div className="app-wrapper">
-          <h1>To-Do List</h1>
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Enter a to-do..."
-              className="task-input"
-              required
-              value={descripcion}
-              onChange={(e) => handleOnChange(e)}
-            />
-            <button className="button-add" type="submit">
-              Add
-            </button>
-          </form>
+      <div className="container mt-5 d-flex justify-content-center">
+        <div className="text-center">
+          <Form onSubmit={handleSubmit}>
+            <InputGroup className="mb-3">
+              <input
+                type="text"
+                placeholder="Escribe tu tarea..."
+                className="form-control form-control-lg"
+                required
+                value={descripcion}
+                onChange={(e) => handleOnChange(e)}
+              />
+              <Button className="btn" variant="success" type="submit">
+                Añadir
+              </Button>
+            </InputGroup>
+          </Form>
           <ul>
             {datos.map((dato, index) => (
-              <li className="list-item" key={index}>
-                <p className="fecha">
+              <li
+                className="list-item d-flex justify-content-between align-items-center shadow bg-dark text-white p-3 mb-2 rounded"
+                key={index}
+              >
+                <p className="fecha fw-bold mb-0 p-2">
                   Fecha: {dato.fechaCreacion.split("T")[0]}
                 </p>
                 <br />
-                <h6 className="descripcion">{dato.descripcion}</h6>
-                <div className="button-group">
+                <h6 className="descripcion mb-0 p-3">{dato.descripcion}</h6>
+                <div className="button-group p-2">
                   <i
                     className={`fas fa-check-circle icon-check ${
                       dato.estado === 1 ? "completed" : "pending"
