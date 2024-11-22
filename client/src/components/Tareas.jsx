@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Form, InputGroup, Button } from "react-bootstrap";
+import { Form, InputGroup, Button, Modal } from "react-bootstrap";
 import "../css/todoStyles.css";
 
 export const Tareas = () => {
@@ -10,113 +10,97 @@ export const Tareas = () => {
   const [descripcion, setDescripcion] = useState("");
   const [estado, setEstado] = useState(0);
 
-  // SOLICITUD DE TAREAS
+  // Estados para el modal
+  const [showModal, setShowModal] = useState(false);
+  const [tareaSeleccionada, setTareaSeleccionada] = useState(null);
+  const [nuevaDescripcion, setNuevaDescripcion] = useState("");
+
+  // Solicitud de tareas
   useEffect(() => {
-    // Solicitud al servidor Express
     axios
       .get(`http://localhost:3001/todo/${id}`)
       .then((response) => {
-        setDatos(response.data); // Guarda los datos en el estado datos
-        // console.log(datos);
+        setDatos(response.data);
       })
       .catch((error) => {
         console.error("Error al obtener los datos:", error);
       });
-  }, []);
+  }, [id]);
 
-  console.log(datos);
-
-  // BOTON PARA ADD UNA TAREA-------------------------------------------
+  // Manejo del formulario para agregar tareas
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Evita el comportamiento predeterminado del formulario
-
+    e.preventDefault();
     try {
       const newDate = new Date().toISOString().split("T")[0];
-
       const nuevaTarea = { id, newDate, estado, descripcion };
-      console.log(nuevaTarea);
 
-      // Solicitud POST al servidor
       const response = await axios.post(
         `http://localhost:3001/crearTarea`,
         nuevaTarea
       );
 
-      // Actualiza la lista de tareas con la nueva tarea agregada
-      setDatos([...datos, response.data.tarea]); // response.data contiene la tarea creada
-
-      // Limpia el formulario
+      setDatos([...datos, response.data.tarea]);
       setDescripcion("");
       setEstado(0);
     } catch (error) {
       console.error("Error al agregar tarea:", error);
     }
   };
-  // BOTON PARA ELIMINAR UNA TAREA-------------------------------------------
-  const handleDelete = async (idTarea) => {
-    console.log(idTarea);
-    try {
-      // Petición DELETE al backend
-      await axios.delete(`http://localhost:3001/eliminarTarea/${idTarea}`);
 
-      // Actualizar la lista de tareas en el estado
+  // Eliminar una tarea
+  const handleDelete = async (idTarea) => {
+    try {
+      await axios.delete(`http://localhost:3001/eliminarTarea/${idTarea}`);
       setDatos(datos.filter((tarea) => tarea.idTarea !== idTarea));
     } catch (error) {
       console.error("Error al eliminar la tarea:", error);
-      alert("Hubo un problema al eliminar la tarea. Inténtalo de nuevo.");
     }
   };
 
-  const handleEdit = async (tarea) => {
-    // Mostrar un prompt para editar la descripción
-    const nuevaDescripcion = prompt("Editar descripción:", tarea.descripcion);
-    console.log(tarea.descripcion);
-    console.log(nuevaDescripcion);
+  // Abrir el modal para editar una tarea
+  const handleEdit = (tarea) => {
+    setTareaSeleccionada(tarea);
+    setNuevaDescripcion(tarea.descripcion);
+    setShowModal(true);
+  };
 
-    // Verificar si la descripción no es null y no está vacía
-    if (nuevaDescripcion !== null && nuevaDescripcion.trim() !== "") {
-      // Realizar la solicitud PUT para actualizar la tarea
-      axios
-        .put(`http://localhost:3001/editarTarea`, {
-          descripcion: nuevaDescripcion, id: tarea.idTarea // Enviar la nueva descripción en el cuerpo de la solicitud
-        })
-        .then((response) => {
-          // Si la solicitud es exitosa, actualizamos el estado de los datos
-          setDatos(
-            datos.map((t) =>
-              t.idTarea === tarea.idTarea
-                ? { ...t, descripcion: nuevaDescripcion }
-                : t
-            )
-          );
-        })
-        .catch((error) => {
-          // Manejo de errores
-          console.error("Error al editar la tarea:", error);
-          alert("Hubo un problema al actualizar la tarea. Inténtalo de nuevo.");
-        });
-    } else {
-      // Si la descripción es vacía o se cancela el prompt, no se hace nada
+  // Guardar los cambios de la tarea
+  const guardarCambios = async () => {
+    if (nuevaDescripcion.trim() === "") {
       alert("La descripción no puede estar vacía.");
+      return;
     }
-  };
 
-  const handleOnChange = (e) => {
-    setDescripcion(e.target.value); // Actualiza el estado con el valor del input
+    try {
+      await axios.put(`http://localhost:3001/editarTarea`, {
+        descripcion: nuevaDescripcion,
+        id: tareaSeleccionada.idTarea,
+      });
+
+      setDatos(
+        datos.map((t) =>
+          t.idTarea === tareaSeleccionada.idTarea
+            ? { ...t, descripcion: nuevaDescripcion }
+            : t
+        )
+      );
+
+      setShowModal(false);
+    } catch (error) {
+      console.error("Error al editar la tarea:", error);
+    }
   };
 
   const handleToggleEstado = async (idTarea, estadoActual) => {
-    const nuevoEstado = estadoActual === 1 ? 0 : 1; // Cambia el estado
-    console.log(nuevoEstado, idTarea);
+    const nuevoEstado = estadoActual === 1 ? 0 : 1;
     try {
       await axios.put(`http://localhost:3001/cambiarEstado/${idTarea}`, {
         estado: nuevoEstado,
       });
 
-      // Actualiza el estado local de la tarea
       setDatos(
         datos.map((tarea) =>
-          tarea.id === idTarea ? { ...tarea, estado: nuevoEstado } : tarea
+          tarea.idTarea === idTarea ? { ...tarea, estado: nuevoEstado } : tarea
         )
       );
     } catch (error) {
@@ -136,7 +120,7 @@ export const Tareas = () => {
                 className="form-control form-control-lg"
                 required
                 value={descripcion}
-                onChange={(e) => handleOnChange(e)}
+                onChange={(e) => setDescripcion(e.target.value)}
               />
               <Button className="btn" variant="success" type="submit">
                 Añadir
@@ -150,9 +134,8 @@ export const Tareas = () => {
                 key={index}
               >
                 <p className="fecha fw-bold mb-0 p-2">
-                  Fecha: {dato.fechaCreacion.split("T")[0]} // Id: {dato.idTarea}
+                  Fecha: {dato.fechaCreacion.split("T")[0]}
                 </p>
-                <br />
                 <h6 className="descripcion mb-0 p-3">{dato.descripcion}</h6>
                 <div className="button-group p-2">
                   <i
@@ -180,6 +163,33 @@ export const Tareas = () => {
           </ul>
         </div>
       </div>
+
+      {/* Modal de edición */}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Editar Tarea</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="mb-2">
+          <Form>
+            <Form.Group>
+              <Form.Label className="fw-bold">Nueva descripción:</Form.Label>
+              <Form.Control
+                type="text"
+                value={nuevaDescripcion}
+                onChange={(e) => setNuevaDescripcion(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={() => setShowModal(false)}>
+            Cancelar
+          </Button>
+          <Button variant="success" onClick={guardarCambios}>
+            Guardar Cambios
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
