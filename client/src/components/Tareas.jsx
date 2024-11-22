@@ -7,6 +7,8 @@ import "../css/todoStyles.css";
 export const Tareas = () => {
   const { id } = useParams(); // Captura el id de la URL
   const [datos, setDatos] = useState([]);
+  const [descripcion, setDescripcion] = useState("");
+  const [estado, setEstado] = useState(0);
 
   // SOLICITUD DE TAREAS
   useEffect(() => {
@@ -15,7 +17,7 @@ export const Tareas = () => {
       .get(`http://localhost:3001/todo/${id}`)
       .then((response) => {
         setDatos(response.data); // Guarda los datos en el estado datos
-        console.log(datos);
+        // console.log(datos);
       })
       .catch((error) => {
         console.error("Error al obtener los datos:", error);
@@ -24,8 +26,6 @@ export const Tareas = () => {
 
   console.log(datos);
 
-  const [descripcion, setDescripcion] = useState("");
-  const [estado, setEstado] = useState(0);
   // BOTON PARA ADD UNA TAREA-------------------------------------------
   const handleSubmit = async (e) => {
     e.preventDefault(); // Evita el comportamiento predeterminado del formulario
@@ -71,13 +71,14 @@ export const Tareas = () => {
     // Mostrar un prompt para editar la descripción
     const nuevaDescripcion = prompt("Editar descripción:", tarea.descripcion);
     console.log(tarea.descripcion);
+    console.log(nuevaDescripcion);
 
     // Verificar si la descripción no es null y no está vacía
     if (nuevaDescripcion !== null && nuevaDescripcion.trim() !== "") {
       // Realizar la solicitud PUT para actualizar la tarea
       axios
-        .put(`http://localhost:3001/editarTarea/${tarea.idTarea}`, {
-          descripcion: nuevaDescripcion, // Enviar la nueva descripción en el cuerpo de la solicitud
+        .put(`http://localhost:3001/editarTarea`, {
+          descripcion: nuevaDescripcion, id: tarea.idTarea // Enviar la nueva descripción en el cuerpo de la solicitud
         })
         .then((response) => {
           // Si la solicitud es exitosa, actualizamos el estado de los datos
@@ -149,7 +150,7 @@ export const Tareas = () => {
                 key={index}
               >
                 <p className="fecha fw-bold mb-0 p-2">
-                  Fecha: {dato.fechaCreacion.split("T")[0]}
+                  Fecha: {dato.fechaCreacion.split("T")[0]} // Id: {dato.idTarea}
                 </p>
                 <br />
                 <h6 className="descripcion mb-0 p-3">{dato.descripcion}</h6>

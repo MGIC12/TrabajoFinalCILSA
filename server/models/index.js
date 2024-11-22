@@ -126,16 +126,16 @@ const del = (req, res) => {
 };
 // Método POST para modificar la tarea
 const modificar = (req, res) => {
-  const { descripcion } = req.body;
+  const { descripcion, id } = req.body;
   // console.log(req.params); // Para debuggear
 
-  if (!descripcion) {
-    res.status(400).json({ error: "La descripcion es necesaria." });
-  }
+  // if (!descripcion) {
+  //   res.status(400).json({ error: "La descripcion es necesaria." });
+  // }
 
   const sqlInsert = "UPDATE tareas SET descripcion = ? WHERE idTarea = ?";
 
-  connection.query(sqlInsert, [descripcion], (err, result) => {
+  connection.query(sqlInsert, [descripcion, id], (err, result) => {
     if (err) {
       res.status(500).json({ error: "Error al insertar los datos" });
       console.error("Error en la consulta:", err);
@@ -151,7 +151,7 @@ const cambioestado = (req, res) => {
   const idTarea = req.params.id;
   const { estado } = req.body;
 
-  const sqlQuery = "UPDATE tareas SET estado = ? WHERE id = ?";
+  const sqlQuery = "UPDATE tareas SET estado = ? WHERE idTarea = ?";
 
   connection.query(sqlQuery, [estado, idTarea], (err, result) => {
     if (err) {
