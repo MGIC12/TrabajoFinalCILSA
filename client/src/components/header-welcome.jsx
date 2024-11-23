@@ -33,7 +33,7 @@ function HeaderWelcome() {
           <nav className="navbar navbar-expand-sm header">
             <div className="container-fluid">
               <Link className="navbar-brand logo-inicio" to="/">
-                ToDoW3b
+                <img src="../img/LogoToDo.png" className="logo"></img>
               </Link>
               <button
                 className="navbar-toggler boton-nav"
@@ -61,7 +61,7 @@ function HeaderWelcome() {
           <nav className="navbar navbar-expand-sm header">
             <div className="container-fluid">
               <Link className="navbar-brand logo-inicio" to="/">
-                ToDoW3b
+                <img src="../img/LogoToDo.png" className="logo"></img>
               </Link>
               <button
                 className="navbar-toggler boton-nav"
