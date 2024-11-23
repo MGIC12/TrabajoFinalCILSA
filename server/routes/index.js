@@ -24,7 +24,7 @@ router.delete("/eliminarTarea/:id", del);
 
 router.put("/editarTarea", modificar);
 
-router.put("/cambiarEstado/:id", cambioestado);
+router.put("/cambiarEstado", cambioestado);
 
 //router.delete('/eliminarTarea', del);
 

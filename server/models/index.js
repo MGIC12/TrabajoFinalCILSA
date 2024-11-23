@@ -148,12 +148,11 @@ const modificar = (req, res) => {
   });
 };
 const cambioestado = (req, res) => {
-  const idTarea = req.params.id;
-  const { estado } = req.body;
+  const { estado, id } = req.body;
 
   const sqlQuery = "UPDATE tareas SET estado = ? WHERE idTarea = ?";
 
-  connection.query(sqlQuery, [estado, idTarea], (err, result) => {
+  connection.query(sqlQuery, [estado, id], (err, result) => {
     if (err) {
       console.error("Error al cambiar el estado:", err);
       return res.status(500).json({ error: "Error al cambiar el estado" });

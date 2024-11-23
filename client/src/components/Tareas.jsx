@@ -14,7 +14,7 @@ export const Tareas = () => {
   const [showModal, setShowModal] = useState(false);
   const [tareaSeleccionada, setTareaSeleccionada] = useState(null);
   const [nuevaDescripcion, setNuevaDescripcion] = useState("");
-
+console.log(datos)
   // Solicitud de tareas
   useEffect(() => {
     axios
@@ -93,9 +93,10 @@ export const Tareas = () => {
 
   const handleToggleEstado = async (idTarea, estadoActual) => {
     const nuevoEstado = estadoActual === 1 ? 0 : 1;
+
     try {
-      await axios.put(`http://localhost:3001/cambiarEstado/${idTarea}`, {
-        estado: nuevoEstado,
+      await axios.put(`http://localhost:3001/cambiarEstado`, {
+        estado: nuevoEstado, id: idTarea,
       });
 
       setDatos(
@@ -130,23 +131,15 @@ export const Tareas = () => {
           <ul>
             {datos.map((dato, index) => (
               <li
-                className="list-item d-flex justify-content-between align-items-center shadow bg-dark text-white p-3 mb-2 rounded"
+                className={`list-item d-flex justify-content-between align-items-center shadow bg-dark text-white p-3 mb-2 rounded ${ dato.estado === 1 ? "completada" : "pendiente"
+                }`}
                 key={index}
               >
                 <p className="fecha fw-bold mb-0 p-2">
                   Fecha: {dato.fechaCreacion.split("T")[0]}
                 </p>
                 <h6 className="descripcion mb-0 p-3">{dato.descripcion}</h6>
-                <div className="button-group p-2">
-                  <i
-                    className={`fas fa-check-circle icon-check ${
-                      dato.estado === 1 ? "completed" : "pending"
-                    }`}
-                    onClick={() =>
-                      handleToggleEstado(dato.idTarea, dato.estado)
-                    }
-                    title="Cambiar estado"
-                  ></i>
+                <div className="grupo button-group p-2 d-flex align-items-center">
                   <i
                     className="fas fa-edit icon-edit"
                     onClick={() => handleEdit(dato)}
@@ -157,6 +150,17 @@ export const Tareas = () => {
                     onClick={() => handleDelete(dato.idTarea)}
                     title="Eliminar"
                   ></i>
+                  <div className="check-container">
+                    <input type="checkbox" className=""
+                    checked={dato.estado === 1}
+                    onChange={(e) => 
+                      handleToggleEstado(dato.idTarea, dato.estado)
+                    }
+                      title="Cambiar estado"></input>
+                    <span className="checkmark" onClick={(e) => 
+                      handleToggleEstado(dato.idTarea, dato.estado)
+                    }></span>
+                  </div>
                 </div>
               </li>
             ))}
