@@ -34,11 +34,11 @@ export const Register = () => {
 
   return (
     <>
-      <section className="container center mt-3">
-        <h2 className="text-center mb-3 h1 mt-3 fw-bold border-bottom border-3 rounded border-secondary">
+      <section className="container center mt-3 bg-dark shadow-lg rounded">
+        <h2 className="text-center mb-3 h1 mt-3 fw-bold border-bottom border-3 rounded border-secondary text-white">
           Registro
         </h2>
-        <Form onSubmit={handleSubmit} className="form">
+        <Form onSubmit={handleSubmit} className="form text-white">
           <Form.Label>Nombre</Form.Label>
           <Form.Control
             id=""
@@ -68,10 +68,10 @@ export const Register = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Form.Text className="text-center">
+          <Form.Text className="text-center text-white">
             No vamos a compartir tus datos con nadie.
           </Form.Text>
-          <Button type="submit" variant="success" className="mt-2">
+          <Button type="submit" variant="success" className="mt-2 mb-5">
             Registrarse
           </Button>
         </Form>

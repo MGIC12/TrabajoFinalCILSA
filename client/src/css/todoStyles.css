@@ -1,6 +1,6 @@
 body {
-  background-image: url('../../public/img/neon-wallpaper.jpg');
-  background-size: cover;
+  background-image: url('../../public/img/Fondo-rojo.svg');
+  background-size:cover ;
 }
 .completada {
   background-color: var(--wine);

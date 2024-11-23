@@ -32,11 +32,11 @@ export const Login = () => {
 
   return (
     <>
-      <section className="container center mt-3">
-        <h2 className="text-center mb-3 h1 mt-3 fw-bold border-bottom border-3 rounded border-secondary">
+      <section className="container center mt-3 bg-dark shadow-lg rounded ">
+        <h2 className="text-center mb-3 h1 mt-3 fw-bold border-bottom border-3 rounded border-secondary text-white">
           Inicio de Sesión
         </h2>
-        <Form onSubmit={handleLogin} className="form mt-3">
+        <Form onSubmit={handleLogin} className="form mt-3 text-white">
           <Form.Label>Correo electrónico</Form.Label>
           <Form.Control
             id=""
@@ -56,7 +56,7 @@ export const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Form.Text className="text-center">
+          <Form.Text className="text-center text-white">
             Asegúrate de no compartir tu contraseña con nadie.
           </Form.Text>
           <Button type="submit" variant="success" className="mb-3">
@@ -68,9 +68,9 @@ export const Login = () => {
             {error}
           </p>
         )}
-        <p>
+        <p className="text-white">
           No tenés cuenta?{" "}
-          <Link className="text-decoration-none text-danger" to="/register">
+          <Link className="text-decoration-none text-warning" to="/register">
             Registrate
           </Link>
         </p>
