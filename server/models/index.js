@@ -83,7 +83,8 @@ const user = (req, res) => {
 };
 
 const crear = (req, res) => {
-  const { id, newDate, estado, descripcion } = req.body;
+  const { newDate, estado, descripcion } = req.body;
+  const { id } = req.params;
   console.log(req.body);
   // Validación de los datos recibidos
   if (!id || !descripcion || !newDate || estado === undefined) {

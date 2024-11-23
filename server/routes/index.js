@@ -18,7 +18,7 @@ router.post("/login", login);
 // Ruta para consultar datos del USUARIO
 router.get("/user/:id", user);
 
-router.post("/crearTarea", crear);
+router.post("/crearTarea/:id", crear);
 
 router.delete("/eliminarTarea/:id", del);
 

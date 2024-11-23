@@ -10,17 +10,20 @@ export const Register = () => {
   const [password, setPassword] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [error, setError] = useState("");
+  const [formErrors, setFormErrors] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Evita que el formulario se envíe de la forma tradicional
-
-    // Realiza la solicitud POST
+    if(validarFormulario()){
+          // Realiza la solicitud POST
     axios
       .post("http://localhost:3001/crearUser", { nombre, email, password })
       .then((response) => {
         setNombre(""); // Limpia el formulario
         setEmail("");
         setPassword("");
+        setFormErrors({});
+        setError("");
         setMensaje(response.data.message); // Muestra un mensaje de éxito
       })
       .catch((error) => {
@@ -30,7 +33,50 @@ export const Register = () => {
           setError("Error en el servidor");
         }
       });
+    } else {
+
+    }
+
   };
+
+ // Función para validar el formulario
+const validarFormulario = () => {
+  const errores = {};
+  const regexNombre = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+  const regexEmail = /\S+@\S+\.\S+/;
+  const regexPass = /\s+/;
+
+  // Validar nombre
+  if (!nombre.trim()) {
+    errores.nombre = 'El nombre es obligatorio';
+  } else if (!regexNombre.test(nombre)){
+    errores.nombre = 'Usar solo letras y espacios';
+  } else if (nombre.length < 3) {
+    errores.nombre = 'El nombre debe tener al menos 3 caracteres';
+  }
+
+  // Validar email
+  if (!email.trim()) {
+    errores.email = 'El correo electrónico es obligatorio';
+  } else if (!regexEmail.test(email)) {
+    errores.email = 'El correo electrónico no es válido';
+  }
+
+  // Validar password
+  if (!password.trim()) {
+    errores.password = 'La contraseña es obligatoria';
+  } else if (regexPass.test(password)){
+    errores.password = 'La contraseña no debe contener espacios';
+  } else if (nombre.length < 3) {
+    errores.nombre = 'La contraseña debe tener al menos 3 caracteres';
+  }
+
+  setFormErrors(errores);
+  setError("");
+
+  // Devuelve true si no hay errores
+  return Object.keys(errores).length === 0;
+};
 
   return (
     <>
@@ -71,17 +117,28 @@ export const Register = () => {
           <Form.Text className="text-center text-white">
             No vamos a compartir tus datos con nadie.
           </Form.Text>
-          <Button type="submit" variant="success" className="mt-2 mb-5">
+          <Button type="submit" variant="success" className="mt-2 mb-3">
             Registrarse
           </Button>
         </Form>
-        {mensaje && <p className="success-text">{mensaje}</p>}
+        {mensaje && Object.keys(formErrors).length === 0 && error.length == 0 && (
+          <>
+          <p className="text-white mb-1">{mensaje}</p>
+          <Link className="text-warning mb-2 fw-bold" to="/login">Iniciá sesión</Link> 
+          </>
+        )}
         {error && (
-          <p className="error-text" style={{ color: "red" }}>
-            {error}
+          <p style={{ color: "red" }}>
+            • {error}
           </p>
         )}
-        {mensaje && <Link to="/login">Iniciá sesión</Link>}
+        {formErrors && (
+        <div style={{ color: "red" }}>
+          {Object.values(formErrors).map((error, index) => (
+            <p key={index}>• {error}</p>
+          ))}
+        </div>
+      )}
       </section>
     </>
   );

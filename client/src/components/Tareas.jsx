@@ -32,10 +32,10 @@ export const Tareas = () => {
     e.preventDefault();
     try {
       const newDate = new Date().toISOString().split("T")[0];
-      const nuevaTarea = { id, newDate, estado, descripcion };
+      const nuevaTarea = { newDate, estado, descripcion };
 
       const response = await axios.post(
-        `http://localhost:3001/crearTarea`,
+        `http://localhost:3001/crearTarea/${id}`,
         nuevaTarea
       );
 
