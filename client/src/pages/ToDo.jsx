@@ -26,7 +26,7 @@ function ToDo() {
   return (
     <>
       <div className="container center mt-3">
-        <h1 className="text-center mt-3 fw-bold ">Tareas de {user}</h1>
+        <h1 className="titulo text-center text-white mt-3 fw-bold ">Tareas de {user}</h1>
         {/* {JSON.stringify(user)} */}
         <Tareas />
       </div>

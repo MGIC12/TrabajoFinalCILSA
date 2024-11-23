@@ -14,7 +14,7 @@ export const Tareas = () => {
   const [showModal, setShowModal] = useState(false);
   const [tareaSeleccionada, setTareaSeleccionada] = useState(null);
   const [nuevaDescripcion, setNuevaDescripcion] = useState("");
-console.log(datos)
+  
   // Solicitud de tareas
   useEffect(() => {
     axios
@@ -131,7 +131,7 @@ console.log(datos)
           <ul>
             {datos.map((dato, index) => (
               <li
-                className={`list-item d-flex justify-content-between align-items-center shadow bg-dark text-white p-3 mb-2 rounded ${ dato.estado === 1 ? "completada" : "pendiente"
+                className={`list-item d-flex justify-content-between align-items-center shadow p-3 mb-2 rounded ${ dato.estado === 1 ? "completada muted" : "text-white bg-dark"
                 }`}
                 key={index}
               >
@@ -141,17 +141,17 @@ console.log(datos)
                 <h6 className="descripcion mb-0 p-3">{dato.descripcion}</h6>
                 <div className="grupo button-group p-2 d-flex align-items-center">
                   <i
-                    className="fas fa-edit icon-edit"
+                    className="fas fa-edit icon-edit text-white"
                     onClick={() => handleEdit(dato)}
                     title="Editar"
                   ></i>
                   <i
-                    className="fas fa-trash icon-delete"
+                    className="fas fa-trash icon-delete text-danger"
                     onClick={() => handleDelete(dato.idTarea)}
                     title="Eliminar"
                   ></i>
                   <div className="check-container">
-                    <input type="checkbox" className=""
+                    <input type="checkbox"
                     checked={dato.estado === 1}
                     onChange={(e) => 
                       handleToggleEstado(dato.idTarea, dato.estado)

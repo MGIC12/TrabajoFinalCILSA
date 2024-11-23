@@ -1,11 +1,19 @@
+body {
+  background-image: url('../../public/img/neon-wallpaper.jpg');
+  background-size: cover;
+}
 .completada {
-  background-color: red;
-  color: aqua;
+  background-color: var(--wine);
+  .fecha, .descripcion {
+    text-decoration: line-through;
+  }
 }
 .grupo {
   column-gap: 10px;
 }
-
+.titulo {
+  font-size: 3.5rem;
+}
 
 /* CUSTOM CHECKBOX https://www.w3schools.com/howto/howto_css_custom_checkbox.asp */
 
@@ -45,7 +53,7 @@
 }
 /* Cuando el checkbox está checked, agregar fondo rojo-vino */
 .check-container input:checked ~ .checkmark {
-  background-color: #912f40ff;
+  background-color: #198754;
 }
 /* Crear el check/indicador (escondido cuando no está checked) */
 .checkmark:after {
