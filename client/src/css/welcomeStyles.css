@@ -98,10 +98,7 @@ html::-webkit-scrollbar-thumb:hover {
   transition: 1s;
 }
 .link-inicio {
-  /* text-decoration: none; */
   color: var(--wine);
-  /* border-bottom: 1px solid var(--indigo-dye); */
-
   &:hover {
     color: var(--charcoal);
   }

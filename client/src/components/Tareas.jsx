@@ -5,7 +5,7 @@ import { Form, InputGroup, Button, Modal } from "react-bootstrap";
 import "../css/todoStyles.css";
 
 export const Tareas = () => {
-  const { id } = useParams(); // Captura el id de la URL
+  const { id } = useParams(); // Captura el id de la URL (idUsuario)
   const [datos, setDatos] = useState([]);
   const [descripcion, setDescripcion] = useState("");
   const [estado, setEstado] = useState(0);
@@ -30,6 +30,12 @@ export const Tareas = () => {
   // Manejo del formulario para agregar tareas
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (descripcion.trim() === "") {
+      alert("La descripción no puede estar vacía.");
+      return;
+    }
+
     try {
       const newDate = new Date().toISOString().split("T")[0];
       const nuevaTarea = { newDate, estado, descripcion };
@@ -37,10 +43,11 @@ export const Tareas = () => {
       const response = await axios.post(
         `http://localhost:3001/crearTarea/${id}`,
         nuevaTarea
-      );
+      ); // Me devuelve los datos de la nueva tarea en la bbdd
 
-      setDatos([...datos, response.data.tarea]);
-      setDescripcion("");
+      // console.log(response.data.tarea); // Debug
+      setDatos([...datos, response.data.tarea]); // Agrego la nueva tarea a la lista de tareas
+      setDescripcion(""); // Limpio las variables
       setEstado(0);
     } catch (error) {
       console.error("Error al agregar tarea:", error);
@@ -50,8 +57,8 @@ export const Tareas = () => {
   // Eliminar una tarea
   const handleDelete = async (idTarea) => {
     try {
-      await axios.delete(`http://localhost:3001/eliminarTarea/${idTarea}`);
-      setDatos(datos.filter((tarea) => tarea.idTarea !== idTarea));
+      await axios.delete(`http://localhost:3001/eliminarTarea/${idTarea}`); // Elimino la tarea de bbdd
+      setDatos(datos.filter((tarea) => tarea.idTarea !== idTarea)); // Elimino la tarea de la lista de tareas
     } catch (error) {
       console.error("Error al eliminar la tarea:", error);
     }
@@ -77,6 +84,8 @@ export const Tareas = () => {
         id: tareaSeleccionada.idTarea,
       });
 
+      // Actualizo la tarea en la lista de tareas
+      // Creo una nueva lista con la nueva descripcion
       setDatos(
         datos.map((t) =>
           t.idTarea === tareaSeleccionada.idTarea
@@ -92,13 +101,15 @@ export const Tareas = () => {
   };
 
   const handleToggleEstado = async (idTarea, estadoActual) => {
-    const nuevoEstado = estadoActual === 1 ? 0 : 1;
+    const nuevoEstado = estadoActual === 1 ? 0 : 1; // Si el estado es 1, ponelo en 0 y viceversa
 
     try {
       await axios.put(`http://localhost:3001/cambiarEstado`, {
         estado: nuevoEstado, id: idTarea,
-      });
+      }); // Modifica el estado en la bbdd
 
+      // Actualizo la tarea en la lista de tareas
+      // Creo una nueva lista con el nuevo estado (completado/pendiente)
       setDatos(
         datos.map((tarea) =>
           tarea.idTarea === idTarea ? { ...tarea, estado: nuevoEstado } : tarea

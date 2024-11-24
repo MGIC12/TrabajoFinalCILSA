@@ -14,8 +14,8 @@ export const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Evita que el formulario se envíe de la forma tradicional
-    if(validarFormulario()){
-          // Realiza la solicitud POST
+    if(validarFormulario()){// Si los campos estan validados
+                            // Realiza la solicitud POST
     axios
       .post("http://localhost:3001/crearUser", { nombre, email, password })
       .then((response) => {
@@ -33,13 +33,10 @@ export const Register = () => {
           setError("Error en el servidor");
         }
       });
-    } else {
-
     }
-
   };
 
- // Función para validar el formulario
+  // Función para validar el formulario
 const validarFormulario = () => {
   const errores = {};
   const regexNombre = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;

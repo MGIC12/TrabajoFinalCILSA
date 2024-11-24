@@ -21,7 +21,6 @@ function Welcome() {
             data-aos-easing="ease-in-out-back"
           >
             <h1 className="bienvenido">ToDoW3b</h1>
-            {/* <!-- que la x se vaya cambiando cada xtiempo: o,a,e,x --> */}
           </div>
           <div
             className="info cartel"

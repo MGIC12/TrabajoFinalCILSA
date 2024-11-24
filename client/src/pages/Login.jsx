@@ -16,7 +16,7 @@ export const Login = () => {
     axios
       .post("http://localhost:3001/login", { email, password })
       .then((response) => {
-        const idUsuario = response.data.id;
+        const idUsuario = response.data.id; // Toma el id del usuario para redirigir
         navigate(`/todo/${idUsuario}`, { state: { logged: true } }); // Redirige al usuario a la pagina con sus tareas.
       })
       .catch((error) => {

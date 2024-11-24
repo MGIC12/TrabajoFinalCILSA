@@ -4,8 +4,7 @@ import { useParams } from "react-router-dom";
 import { Tareas } from "../components/Tareas";
 
 function ToDo() {
-  const { id } = useParams(); // Captura el id de la URL
-  // const [datos, setDatos] = useState([]);
+  const { id } = useParams(); // Captura el id de la URL (idUsuario)
   const [user, setUser] = useState("");
 
   // SOLICITUD DE DATOS DE USER
@@ -21,13 +20,11 @@ function ToDo() {
         console.error("Error al obtener los datos:", error);
       });
   }, []);
-  // console.log(user)
 
   return (
     <>
       <div className="container center mt-3">
-        <h1 className="titulo text-center text-white mt-3 fw-bold ">Tareas de {user}</h1>
-        {/* {JSON.stringify(user)} */}
+        <h1 className="titulo text-center text-white mt-3 fw-bold">Tareas de {user}</h1>
         <Tareas />
       </div>
     </>

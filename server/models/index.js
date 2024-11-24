@@ -1,20 +1,22 @@
-// Base de datos
+// Importo la Base de Datos
 const connection = require("../database/db");
 
+// Función que devuelve las tareas de un usuario
 const tareas = (req, res) => {
   const { id } = req.params;
-  const sqlQuery = "SELECT * FROM tareas WHERE idUsuario = ?"; // Cambia esto según tu consulta
+  const sqlQuery = "SELECT * FROM tareas WHERE idUsuario = ?"; // Consulta/Sentencia de SQL
 
   connection.query(sqlQuery, [id], (err, results) => {
     if (err) {
       res.status(500).json({ error: "Error en la consulta" });
       console.error("Error en la consulta:", err);
     } else {
-      res.json(results);
+      res.json(results); // Devuelvo los resultados de la consulta
     }
   });
 };
 
+// Función que crea un usuario nuevo
 const register = (req, res) => {
   const { nombre, email, password } = req.body;
 
@@ -22,77 +24,67 @@ const register = (req, res) => {
     res.status(400).json({ error: "Todos los campos son obligatorios" });
   }
 
-  const sqlInsert =
-    "INSERT INTO users (nombre, email, password) VALUES (?, ?, ?)";
+  const sqlInsert = "INSERT INTO users (nombre, email, password) VALUES (?, ?, ?)";
 
   connection.query(sqlInsert, [nombre, email, password], (err, result) => {
     if (err) {
-      if (err.code === "ER_DUP_ENTRY") {
-        // Error de valor duplicado
+      if (err.code === "ER_DUP_ENTRY") { // Error de valor duplicado
         res
           .status(409)
           .json({ error: "El correo electrónico ya está registrado" });
       } else {
         res.status(500).json({ error: "Error al insertar los datos" });
       }
-      console.error("Error en la consulta:", err);
+      console.error("Error en la consulta:", err); // Debug
     } else {
       res.json({
         message: "Datos insertados exitosamente",
-        id: result.insertId,
-      });
+      }); // Devuelvo un mensaje de éxito
     }
   });
 };
 
+// Función que se fija si existe un usuario y devuelve su id
 const login = (req, res) => {
   const { email, password } = req.body;
 
-  if (!email || !password) {
-    return res.status(400).json({ error: "Faltan credenciales" });
-  }
-
-  const sqlQuery =
-    "SELECT idUsuario FROM users WHERE email = ? AND password = ?";
+  const sqlQuery = "SELECT idUsuario FROM users WHERE email = ? AND password = ?";
 
   connection.query(sqlQuery, [email, password], (err, results) => {
-    if (err) {
+    if (err) { // Error en la conexion
       res.status(500).json({ error: "Error en la consulta" });
     } else if (results.length > 0) {
       res.json({ success: true, id: results[0].idUsuario }); //devuelve esto results: [ RowDataPacket { idUsuario: 1 } ]
-    } else {
+    } else { // No existe ese usuario
       res
         .status(401)
-        .json({ success: false, message: "Credenciales incorrectas" });
+        .json({ success: false, message: "Credenciales incorrectas" }); // Devuelvo mensaje de error
     }
   });
 };
 
+// Función que devuelve los datos del usuario logueado
 const user = (req, res) => {
   const { id } = req.params;
-  const sqlQuery = "SELECT * FROM users WHERE idUsuario = ?"; // Cambia esto según tu consulta
+  const sqlQuery = "SELECT * FROM users WHERE idUsuario = ?";
 
   connection.query(sqlQuery, [id], (err, results) => {
     if (err) {
       res.status(500).json({ error: "Error en la consulta" });
       console.error("Error en la consulta:", err);
     } else {
-      res.json(results);
+      res.json(results); // Devuelto los resultados de la consulta
     }
   });
 };
 
+// Función que crea una nueva tarea
 const crear = (req, res) => {
   const { newDate, estado, descripcion } = req.body;
-  const { id } = req.params;
-  console.log(req.body);
-  // Validación de los datos recibidos
-  if (!id || !descripcion || !newDate || estado === undefined) {
-    return res.status(400).json({ error: "Todos los campos son obligatorios" });
-  }
+  const { id } = req.params; // Toma el parametro de la Ruta (idUduario)
+  // console.log(req.body, req.params); // Debug
 
-  const sqlQuery =
-    "INSERT INTO tareas (idUsuario, fechaCreacion, estado, descripcion) VALUES (?, ?, ?, ?)";
+  const sqlQuery = "INSERT INTO tareas (idUsuario, fechaCreacion, estado, descripcion) VALUES (?, ?, ?, ?)";
 
   connection.query(
     sqlQuery,
@@ -103,11 +95,10 @@ const crear = (req, res) => {
         return res.status(500).json({ error: "Error al insertar la tarea" });
       }
 
-      // Devuelve una respuesta más útil, incluyendo los datos insertados
+      // Devuelve un mensaje y los datos insertados
       res.status(201).json({
         message: "Tarea insertada exitosamente",
-        tarea: { id, fechaCreacion: newDate, estado, descripcion },
-        result,
+        tarea: { idTarea: result.insertId, idUsuario: id, fechaCreacion: newDate, estado, descripcion },
       });
     }
   );
@@ -116,23 +107,18 @@ const crear = (req, res) => {
 const del = (req, res) => {
   const { id } = req.params;
   const sql = "DELETE FROM tareas WHERE idTarea = ?";
-  console.log(req);
+
   connection.query(sql, [id], (err, results) => {
     if (err) {
       res.status(400).json({ error: err.message });
       return;
     }
-    res.json({ message: `Tarea con ID ${id} eliminada` });
+    res.json({ message: `Tarea con ID ${id} eliminada` }); // Devuelve un mensaje de exito
   });
 };
 // Método POST para modificar la tarea
 const modificar = (req, res) => {
   const { descripcion, id } = req.body;
-  // console.log(req.params); // Para debuggear
-
-  // if (!descripcion) {
-  //   res.status(400).json({ error: "La descripcion es necesaria." });
-  // }
 
   const sqlInsert = "UPDATE tareas SET descripcion = ? WHERE idTarea = ?";
 
@@ -143,7 +129,6 @@ const modificar = (req, res) => {
     } else {
       res.json({
         message: "Datos modificados exitosamente",
-        id: result.insertId,
       });
     }
   });
@@ -158,9 +143,11 @@ const cambioestado = (req, res) => {
       console.error("Error al cambiar el estado:", err);
       return res.status(500).json({ error: "Error al cambiar el estado" });
     }
-    res.json({ message: "Estado de la tarea actualizado correctamente" });
+    res.json({ message: "Estado de la tarea actualizado correctamente" }); // Mensaje de exito
   });
 };
+
+// Comentarios: Muchos mensajes de exito no los mostramos, pero nunca estan de más por si se necesita Debuggear.
 
 module.exports = {
   tareas,
