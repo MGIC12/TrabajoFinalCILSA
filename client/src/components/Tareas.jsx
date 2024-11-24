@@ -14,7 +14,7 @@ export const Tareas = () => {
   const [showModal, setShowModal] = useState(false);
   const [tareaSeleccionada, setTareaSeleccionada] = useState(null);
   const [nuevaDescripcion, setNuevaDescripcion] = useState("");
-  
+
   // Solicitud de tareas
   useEffect(() => {
     axios
@@ -105,8 +105,9 @@ export const Tareas = () => {
 
     try {
       await axios.put(`http://localhost:3001/cambiarEstado`, {
-        estado: nuevoEstado, id: idTarea,
-      }); // Modifica el estado en la bbdd
+        estado: nuevoEstado,
+        id: idTarea,
+      });// Modifica el estado en la bbdd
 
       // Actualizo la tarea en la lista de tareas
       // Creo una nueva lista con el nuevo estado (completado/pendiente)
@@ -142,7 +143,8 @@ export const Tareas = () => {
           <ul>
             {datos.map((dato, index) => (
               <li
-                className={`list-item d-flex justify-content-between align-items-center shadow p-3 mb-2 rounded ${ dato.estado === 1 ? "completada muted" : "text-white bg-dark"
+                className={`list-item d-flex justify-content-between align-items-center shadow p-3 mb-2 rounded ${
+                  dato.estado === 1 ? "completada muted" : "text-white bg-dark"
                 }`}
                 key={index}
               >
@@ -162,15 +164,20 @@ export const Tareas = () => {
                     title="Eliminar"
                   ></i>
                   <div className="check-container">
-                    <input type="checkbox"
-                    checked={dato.estado === 1}
-                    onChange={(e) => 
-                      handleToggleEstado(dato.idTarea, dato.estado)
-                    }
-                      title="Cambiar estado"></input>
-                    <span className="checkmark" onClick={(e) => 
-                      handleToggleEstado(dato.idTarea, dato.estado)
-                    }></span>
+                    <input
+                      type="checkbox"
+                      checked={dato.estado === 1}
+                      onChange={() =>
+                        handleToggleEstado(dato.idTarea, dato.estado)
+                      }
+                      title="Cambiar estado"
+                    ></input>
+                    <span
+                      className="checkmark"
+                      onClick={() =>
+                        handleToggleEstado(dato.idTarea, dato.estado)
+                      }
+                    ></span>
                   </div>
                 </div>
               </li>
